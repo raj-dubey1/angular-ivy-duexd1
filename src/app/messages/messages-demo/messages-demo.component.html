@@ -1,0 +1,9 @@
+
+<cometchat-theme-wrapper [theme]="theme">
+    <cometchat-messages *ngIf="openMessages" [style]="withMessagesStyle" [group]="group">
+    </cometchat-messages>
+    <cometchat-message-list *ngIf="openMessageList" [group]="group" [style]="messageListStyle"></cometchat-message-list>
+    <cometchat-message-header *ngIf="openMessageHeader" [group]="group">
+    </cometchat-message-header>
+    <cometchat-message-composer *ngIf="openMessageComposer" [group]="group"> </cometchat-message-composer>
+</cometchat-theme-wrapper>

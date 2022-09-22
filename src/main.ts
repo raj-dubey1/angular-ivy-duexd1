@@ -1,16 +1,25 @@
-import './polyfills';
-
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CometChat } from '@cometchat-pro/chat';
+import { CometChatLocalize } from '@cometchat-pro/angular-ui-kit';
 
 import { AppModule } from './app/app.module';
+import { COMETCHAT_CONSTANTS } from './CONSTS';
+import { environment } from './environments/environment';
 
-platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
-  // Ensure Angular destroys itself on hot reloads.
-  if (window['ngRef']) {
-    window['ngRef'].destroy();
-  }
-  window['ngRef'] = ref;
+if (environment.production) {
+  enableProdMode();
+}
 
-  // Otherwise, log the boot error
-}).catch(err => console.error(err));
+const appSetting = new CometChat.AppSettingsBuilder().setRegion(COMETCHAT_CONSTANTS.REGION).subscribePresenceForAllUsers().build();
+CometChat.init(COMETCHAT_CONSTANTS.APP_ID, appSetting).then(() => {
+  
+  // CometChatLocalize.setLocale("hi");
+
+  console.log('app is ready to work');
+
+  platformBrowserDynamic().bootstrapModule(AppModule)
+    .catch(err => console.error(err));
+}, (error:any) => {
+  console.log('Error In Init', error);
+});
